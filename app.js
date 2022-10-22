@@ -86,7 +86,12 @@ const contenedor = document.querySelector("#contenedor");
 const carritoContenedor = document.querySelector("#carritoContenedor");
 const vaciarCarrito = document.querySelector("#vaciarCarrito");
 const precioTotal = document.querySelector("#precioTotal");
+const click = document.querySelector('#click')
+const procesarCompra = document.querySelector('#procesarCompra')
 
+if(click){
+  click.addEventListener('click', procesarPedido)
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -95,40 +100,51 @@ document.addEventListener("DOMContentLoaded", () => {
   
 });
 
-vaciarCarrito.addEventListener("click", () => {
-  carrito.length = [];
-  mostrarCarrito();
-});
 
-procesarCompra.addEventListener("click", () => {
-  if (carrito.length === 0) {
-    Swal.fire({
-      title: "¡Tu carrito está vacio!",
-      text: "Compra algo para continuar con la compra",
-      icon: "error",
-      confirmButtonText: "Aceptar",
-    });
-  } else {
-    location.href = "compra.html";
-    procesarPedido()
+if(vaciarCarrito){
+  vaciarCarrito.addEventListener("click", () => {
+    carrito.length = [];
+    mostrarCarrito();
+  });
+}
 
-  }
-});
+if(procesarCompra){
+  procesarCompra.addEventListener("click", () => {
+    if (carrito.length === 0) {
+      Swal.fire({
+        title: "¡Tu carrito está vacio!",
+        text: "Compra algo para continuar con la compra",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    } else {
+      location.href = "compra.html";
+      if(window.href  = "compra.html"){
+        console.log('Hola')
+        procesarPedido()
+      }
+    }
+  });
+}
+
+
 
 stockProductos.forEach((prod) => {
   const { id, nombre, precio, desc, img, cantidad } = prod;
-  contenedor.innerHTML += `
-   <div class="card mt-3" style="width: 18rem;">
-   <img class="card-img-top" src="${img}" alt="Card image cap">
-   <div class="card-body">
-     <h5 class="card-title">${nombre}</h5>
-     <p class="card-text">Precio: ${precio}</p>
-     <p class="card-text">Descripcion: ${desc}</p>
-     <p class="card-text">Cantidad: ${cantidad}</p>
-     <button class="btn btn-primary" onclick="agregarProducto(${id})">Comprar Producto</button>
-   </div>
- </div>
-   `;
+  if(contenedor){
+    contenedor.innerHTML += `
+    <div class="card mt-3" style="width: 18rem;">
+    <img class="card-img-top" src="${img}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">${nombre}</h5>
+      <p class="card-text">Precio: ${precio}</p>
+      <p class="card-text">Descripcion: ${desc}</p>
+      <p class="card-text">Cantidad: ${cantidad}</p>
+      <button class="btn btn-primary" onclick="agregarProducto(${id})">Comprar Producto</button>
+    </div>
+  </div>
+    `;
+  }
 });
 
 const agregarProducto = (id) => {
@@ -140,26 +156,29 @@ const agregarProducto = (id) => {
 
 const mostrarCarrito = () => {
   const modalBody = document.querySelector(".modal .modal-body");
+  if(modalBody){
   modalBody.innerHTML = "";
   carrito.forEach((prod) => {
     const { id, nombre, precio, desc, img, cantidad } = prod;
     console.log(modalBody)
-    modalBody.innerHTML += `
-    <div class="modal-contenedor">
-      <div>
-      <img class="img-fluid img-carrito" src="${img}"/>
+      modalBody.innerHTML += `
+      <div class="modal-contenedor">
+        <div>
+        <img class="img-fluid img-carrito" src="${img}"/>
+        </div>
+        <div>
+        <p>Producto: ${nombre}</p>
+      <p>Precio: ${precio}</p>
+      <p>Cantidad :${cantidad}</p>
+      <button class="btn btn-danger"  onclick="eliminarProducto(${id})">Eliminar producto</button>
+        </div>
       </div>
-      <div>
-      <p>Producto: ${nombre}</p>
-    <p>Precio: ${precio}</p>
-    <p>Cantidad :${cantidad}</p>
-    <button class="btn btn-danger"  onclick="eliminarProducto(${id})">Eliminar producto</button>
-      </div>
-    </div>
-    
-
-    `;
-  });
+      
+  
+      `;
+    })
+  };
+  
   if (carrito.length === 0) {
     console.log("Nada");
     modalBody.innerHTML = `
@@ -169,10 +188,14 @@ const mostrarCarrito = () => {
     console.log("Algo");
   }
   carritoContenedor.textContent = carrito.length;
-  precioTotal.innerText = carrito.reduce(
-    (acc, prod) => acc + prod.cantidad * prod.precio,
-    0
-  );
+
+  if(precioTotal){
+    precioTotal.innerText = carrito.reduce(
+      (acc, prod) => acc + prod.cantidad * prod.precio,
+      0
+    );
+  }
+ 
 
   guardarStorage();
 };
@@ -189,25 +212,29 @@ function eliminarProducto(id) {
 function procesarPedido() {
   carrito.forEach((prod) => {
     console.log(carrito)
+    
     const contenedorCompra = document.querySelector('#contenedorCompra')
     console.log(contenedorCompra);
     const { id, nombre, precio, desc, img, cantidad } = prod;
-    const div = document.createElement("div");
-    div.innerHTML += `
-          <div class="modal-contenedor">
-            <div>
-            <img class="img-fluid img-carrito" src="${img}"/>
+    if(contenedorCompra){
+      const div = document.createElement("div");
+      div.innerHTML += `
+            <div class="modal-contenedor">
+              <div>
+              <img class="img-fluid img-carrito" src="${img}"/>
+              </div>
+              <div>
+              <p>Producto: ${nombre}</p>
+            <p>Precio: ${precio}</p>
+            <p>Cantidad :${cantidad}</p>
+            <button class="btn btn-danger"  onclick="eliminarProducto(${id})">Eliminar producto</button>
+              </div>
             </div>
-            <div>
-            <p>Producto: ${nombre}</p>
-          <p>Precio: ${precio}</p>
-          <p>Cantidad :${cantidad}</p>
-          <button class="btn btn-danger"  onclick="eliminarProducto(${id})">Eliminar producto</button>
-            </div>
-          </div>
-          
-      
-          `;
-    contenedorCompra.appendChild(div);
-  });
-}
+            
+        
+            `;
+      contenedorCompra.appendChild(div);
+    };
+    })
+  }
+
