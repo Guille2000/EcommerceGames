@@ -86,20 +86,20 @@ const contenedor = document.querySelector("#contenedor");
 const carritoContenedor = document.querySelector("#carritoContenedor");
 const vaciarCarrito = document.querySelector("#vaciarCarrito");
 const precioTotal = document.querySelector("#precioTotal");
-const click = document.querySelector('#click')
+const activarFuncion = document.querySelector('#activarFuncion')
 const procesarCompra = document.querySelector('#procesarCompra')
 
-if(click){
-  click.addEventListener('click', procesarPedido)
+if(activarFuncion){
+  activarFuncion.addEventListener('click', procesarPedido)
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  document.querySelector("#activarFuncion").click(procesarPedido)
 
   mostrarCarrito(); 
   
 });
-
 
 if(vaciarCarrito){
   vaciarCarrito.addEventListener("click", () => {
@@ -119,15 +119,9 @@ if(procesarCompra){
       });
     } else {
       location.href = "compra.html";
-      if(window.href  = "compra.html"){
-        console.log('Hola')
-        procesarPedido()
-      }
     }
   });
 }
-
-
 
 stockProductos.forEach((prod) => {
   const { id, nombre, precio, desc, img, cantidad } = prod;
