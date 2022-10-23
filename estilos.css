@@ -1,8 +1,12 @@
 .imagen{
     max-width:100%;
 }
+
 a{
     cursor:pointer;
+}
+.alerta{
+    font-weight:700;
 }
 body{
     background-color: #E3D8D6;
@@ -29,4 +33,7 @@ body{
 }
 a{
     text-decoration: none;
+}
+.boton{
+    opacity:0;
 }

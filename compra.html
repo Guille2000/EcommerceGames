@@ -10,10 +10,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
 
     <link rel="stylesheet" href="estilos.css" />
+    <link rel="stylesheet" href="spinner.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
+    <script type="text/javascript">
+        emailjs.init('0bU4qjecNcP2aiuNx')
+    </script>
+</body>
     <title>Ecommerce</title>
 </head>
 
@@ -24,23 +31,93 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#modal">
-                        <a href="index.html" class="text-white mx-5" id="carritoContenedor">¿Se te olvidó algo? ¡Vuelve
-                            a comprar!</a>
+                        <i class="bi bi-cart mx-5" id="carritoContenedor">0</i>
                     </a>
+                    <a class="text-white" href="index.html">Volver</a>
                 </li>
             </ul>
         </nav>
     </header>
-   
-        <button id="activarFuncion" class="btn btn-secondary mt-2">¡Click!</button>
+
+    <button id="activarFuncion" class="btn btn-secondary boton mt-2">¡Click!</button>
+
     <main>
-        <div class="row mt-5" id="contenedorCompra"></div>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col">
+                    <h2 class="d-flex justify-content-center mb-3">Realizar Compra</h2>
+                    <form id="procesar-pago" method="POST">
+                        <div class="form-group row">
+                            <label for="cliente" class="col-12 col-md-2 col-form-label h2">Cliente :</label>
+                            <div class="col-12 col-md-10">
+                                <input type="text" class="form-control" id="cliente"
+                                    placeholder="Ingresa nombre cliente" name="persona">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-12 col-md-2 col-form-label h2">Correo :</label>
+                            <div class="col-12 col-md-10">
+                            <input type="text"  id="correo" class="form-control"  name="email.id" id="email.id">
+                            </div>
+                        </div>
+
+                        <div id="carrito" class="form-group table-responsive">
+                            <table class="table" id="lista-compra">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Imagen</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Sub Total</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                                <tr>
+                                    <th colspan="4" scope="col" class="text-right">TOTAL
+                                        <p id="totalProceso"></p>
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <div class="row justify-content-center d-none" id="spinner">
+                            <div class="spinner">
+                                <div class="dot1"></div>
+                                <div class="dot2"></div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-between">
+                            <div class="col-md-4 mb-2">
+                                <a href="index.html" class="btn btn-info btn-block">Seguir comprando</a>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                 <input type="submit" class="btn btn-success btn-block" id="button" value="Mandar email">
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
     </main>
+
+
 
 
     <script src="app.js"></script>
     <script src="bootstrap.bundle.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
+
 
 </html>
