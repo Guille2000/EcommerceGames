@@ -3,7 +3,7 @@ const stockProductos = [
     id: 1,
     nombre: "Crash Bandicoot",
     cantidad: 1,
-    desc: "Juego plataformero",
+    desc: "Juego plataformero, niveles dificiles",
     precio: 1200,
     img: "img/Crash.jpg",
   },
@@ -19,7 +19,7 @@ const stockProductos = [
     id: 3,
     nombre: "Pac Man",
     cantidad: 1,
-    desc: "Juego plataformero",
+    desc: "Juego plataformero, niveles basicos",
     precio: 1570,
     img: "img/pacman.jpg",
   },
@@ -133,7 +133,7 @@ stockProductos.forEach((prod) => {
   if (contenedor) {
     contenedor.innerHTML += `
     <div class="card mt-3" style="width: 18rem;">
-    <img class="card-img-top" src="${img}" alt="Card image cap">
+    <img class="card-img-top mt-2" src="${img}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">${nombre}</h5>
       <p class="card-text">Precio: ${precio}</p>
@@ -147,10 +147,20 @@ stockProductos.forEach((prod) => {
 });
 
 const agregarProducto = (id) => {
-  const item = stockProductos.find((prod) => prod.id === id);
-  carrito.push(item);
+  const existe = carrito.some(prod => prod.id === id)
 
-  mostrarCarrito();
+  if(existe){
+    const prod = carrito.map(prod => {
+      if(prod.id === id){
+        prod.cantidad++
+      }
+    })
+  } else {
+    const item = stockProductos.find((prod) => prod.id === id)
+    carrito.push(item)
+  }
+  mostrarCarrito()
+
 };
 
 const mostrarCarrito = () => {
@@ -247,25 +257,24 @@ function procesarPedido() {
 
   const btn = document.getElementById('button');
 
-document.getElementById('procesar-pago')
- .addEventListener('submit', function(event) {
-   event.preventDefault();
+// document.getElementById('procesar-pago')
+//  .addEventListener('submit', function(event) {
+//    event.preventDefault();
 
-   btn.value = 'Sending...';
+   btn.value = 'Enviando...';
 
    const serviceID = 'default_service';
    const templateID = 'template_qxwi0jn';
 
    emailjs.sendForm(serviceID, templateID, this)
     .then(() => {
-      btn.value = 'Send Email';
+      btn.value = 'Finalizar compra';
       alert('Correo enviado!');
     }, (err) => {
-      btn.value = 'Send Email';
+      btn.value = 'Finalizar compra';
       alert(JSON.stringify(err));
     });
-});
-
+    
    const spinner = document.querySelector('#spinner')
    spinner.classList.add('d-flex')
    spinner.classList.remove('d-none')
